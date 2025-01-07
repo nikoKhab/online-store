@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
 import "./App.css";
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 
 function App() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [showDetails, setShowDetails] = useState(false)
 
   useEffect(() => {
     async function getData() {
@@ -27,32 +26,32 @@ function App() {
     getData();
   }, []);
 
-  function getId(product){
-    const id = product.id;
-    console.log(id)
-  }
-
-
   return (
     <>
-      <center><div id="cont">
-        {loading ? (
-          <p className="loading">Loading...</p>
-        ) : (
-          products.map((product) => (
-            <li className="item" key={product.id}>
-              <h2>{product.title}</h2>
-              <img src={product.image} alt="" />
-              <p>{product.price}</p>
-              <p id="category">{product.category}</p>
-              {/* <Link to={"/details"}> */}
-              <button onClick={() => getId(product)} id="view-more-button">view more</button>
-              {/* </Link> */}
-              
-            </li>
-          ))
-        )}
-      </div></center>
+      <center>
+        <div id="cont">
+          {loading ? (
+            <p className="loading">Loading...</p>
+          ) : (
+            products.map((product) => (
+              <li className="item" key={product.id}>
+                <h2>{product.title}</h2>
+                <img src={product.image} alt={product.title} />
+                <p>${product.price}</p>
+                <p id="category">{product.category}</p>
+                <Link
+                  to={{
+                    pathname: "/details",
+                  }}
+                  state={{ id: product.id }} // Pass the `id` in `state`
+                >
+                  <button id="view-more-button">View More</button>
+                </Link>
+              </li>
+            ))
+          )}
+        </div>
+      </center>
     </>
   );
 }
