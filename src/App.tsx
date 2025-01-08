@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import "./App.css";
 import { Link } from "react-router-dom";
 
 function App() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
-
+  
   useEffect(() => {
     async function getData() {
       setLoading(true);
